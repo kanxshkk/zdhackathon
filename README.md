@@ -1,6 +1,11 @@
 # zdhackathon
 
-streamlit run visualization.py
+ streamlit run 'main.py'
+ 
+![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/a716d0ae-75cc-442a-8b4c-626105340224)
+
+
+**Visualizations:**
 
 The app provides the following functionalities:
 
@@ -18,32 +23,36 @@ The app provides the following functionalities:
 
 - **Weekly Trends**: Shows weekly trends in real estate listings.
 
+![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/7863836f-cfaf-44f5-81e5-1a44700e9c65)
 
-![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/0cb356fc-3342-4cb3-baaf-93d23881d3e2)
 
-![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/60413563-2fd1-408f-adb5-10f6a5704d34)
-
-streamlit run 'Home Comparables.py'
+**Home Comparables:**
 
 Enter the criteria for the home you're interested in (such as number of bedrooms, bathrooms, and city_zipcode) and click the "Find Similar Homes" button.
 The app will display a list of similar homes. 
 Click on the address of each home to expand and view detailed information about it.
-![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/5866f04b-cd1c-465c-a8d6-6a8d58ee1ac4)
-![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/c6024555-31e7-4eb3-82ec-f65de8d3cb3d)
-![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/bf58380a-fb8e-4640-b2e8-deb8591fca00)
 
-Homes Deduplication:
-streamlit run duplicates.py 
-![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/ebafcae0-4e53-470e-9cfd-d0007541655f)
-![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/a8a47299-b48c-4f1b-a7b1-5ae28eaf268b)
+![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/bd40ed5f-1383-4db8-98dd-912f366dcffc)
 
-![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/46873e7b-6a2e-4371-996e-ce490e36e988)
+![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/5da9d857-e2d4-467e-baa3-71c762d4c2d3)
 
-Price Estimation:
-run priceestimation.py 
-and then 
-streamlit run 'Home Comparables.py'
-![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/b7302e4a-43aa-4655-bec9-4eee5447c670)
+![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/4e7f5ca9-1c2c-4f30-923e-80c1eefe62a8)
 
-![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/c1a6a429-afb8-48b1-a499-cfb70e8e4886)
+
+
+
+
+**Homes Deduplication:**
+![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/38c61dc7-d7a2-4278-95c5-813a9c242140)
+
+![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/65ffa03f-2787-40c4-b077-8e1133fe5b77)
+
+![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/adeb8d49-47b6-4e17-94ba-2edf82ca4a5e)
+
+
+**Price Estimation:**
+
+![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/7be50a31-318f-4cc3-8a04-2f66b8350e68)
+
+![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/3f26264a-9614-47ad-8626-bbefe1c0e9cd)
 
