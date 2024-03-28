@@ -236,7 +236,7 @@ GROUP BY listing_key
 HAVING COUNT(*) > 1;
 --22 null values 
 
-
+--Check if same houses are listed twice
 SELECT *
 FROM home_info h1
 WHERE EXISTS (
