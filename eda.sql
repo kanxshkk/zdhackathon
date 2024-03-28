@@ -285,6 +285,10 @@ FROM home_info
 GROUP BY home_type
 ORDER BY home_type;
 
+--last sold price set to null if 0.0
+UPDATE home_info
+SET last_sold_price = NULL
+WHERE last_sold_price = 0;
 
 
 
