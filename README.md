@@ -58,7 +58,7 @@ Click on the address of each home to expand and view detailed information about 
 
 ![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/3f26264a-9614-47ad-8626-bbefe1c0e9cd)
 
-**ERD:** is in the [erd.pgerd file]([https://openai.com](https://github.com/kanxshkk/zdhackathon/blob/main/erd.pgerd))
+**ERD:** is in the [erd.pgerd](https://github.com/kanxshkk/zdhackathon/blob/main/erd.pgerd) file
 
 
 Data preprocessing and EDA are inside [eda.sql](https://github.com/kanxshkk/zdhackathon/blob/main/eda.sql)
