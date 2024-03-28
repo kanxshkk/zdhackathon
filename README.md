@@ -2,7 +2,7 @@
 -21pw10
 Kanishk Akash D V
 
-streamlit run 'main.py'
+>> streamlit run 'main.py'
  
 ![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/a716d0ae-75cc-442a-8b4c-626105340224)
 
