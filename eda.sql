@@ -227,4 +227,62 @@ ON
                300000);
 */
 
+select * from home_info;
+
+--entires which have same listing key
+SELECT listing_key, COUNT(*) AS num_entries
+FROM home_info
+GROUP BY listing_key
+HAVING COUNT(*) > 1;
+--22 null values 
+
+
+SELECT *
+FROM home_info h1
+WHERE EXISTS (
+    SELECT 1
+    FROM home_info h2
+    WHERE h1.id <> h2.id -- Exclude the same row
+    AND h1.bedrooms = h2.bedrooms
+    AND h1.bathrooms = h2.bathrooms
+    AND h1.finished_sqft = h2.finished_sqft
+    AND h1.listing_contract_date = h2.listing_contract_date
+    -- Add more attributes as needed
+);
+
+SELECT *
+FROM home_info h1
+WHERE EXISTS (
+    SELECT 1
+    FROM home_info h2
+    WHERE h1.id <> h2.id -- Exclude the same row
+    AND h1.source_system = h2.source_system
+	AND h1.address = h2.address
+    AND h1.usps_address = h2.usps_address
+    AND h1.status = h2.status
+    AND h1.listing_contract_date = h2.listing_contract_date
+    AND h1.on_market_date = h2.on_market_date
+    AND h1.pending_date = h2.pending_date
+    AND h1.last_sold_date = h2.last_sold_date
+    AND h1.off_market_date = h2.off_market_date
+
+    AND h1.home_type = h2.home_type
+    AND h1.finished_sqft = h2.finished_sqft
+    AND h1.lot_size_sqft = h2.lot_size_sqft
+    AND h1.bedrooms = h2.bedrooms
+    AND h1.bathrooms = h2.bathrooms
+    AND h1.year_built = h2.year_built
+    AND h1.new_construction = h2.new_construction
+    AND h1.has_pool = h2.has_pool
+	
+    AND h1.state_market_id = h2.state_market_id
+    AND h1.city_market_id = h2.city_market_id
+    AND h1.zipcode_market_id = h2.zipcode_market_id
+    AND h1.neighborhood_level_1_market_id = h2.neighborhood_level_1_market_id
+    AND h1.neighborhood_level_2_market_id = h2.neighborhood_level_2_market_id
+    AND h1.neighborhood_level_3_market_id = h2.neighborhood_level_3_market_id
+	
+    AND h1.crawler = h2.crawler
+);
+
 
