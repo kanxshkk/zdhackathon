@@ -1,84 +1,80 @@
-from sqlalchemy import create_engine, Column, Integer, String, Float
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-import os
+import streamlit as st
+import psycopg2
 
-# Define the database model
-Base = declarative_base()
+# Function to fetch similar homes from the database
+def get_similar_homes(home_id, bed, bath, city_zipcode):
+    conn = psycopg2.connect(database="zd", user="postgres", password="iamgroot!!!", host="localhost", port="5433")
+    cursor = conn.cursor()
 
-class Home(Base):
-    __tablename__ = 'home_info'
+    # Execute a SQL query to retrieve similar homes based on the provided parameters
+    query = """
+        SELECT id, address
+        FROM home_info
+        WHERE id != %s
+        AND bedrooms = %s
+        AND bathrooms = %s
+        AND city_market_id = %s
+        LIMIT 10
+    """
+    cursor.execute(query, (home_id, bed, bath, city_zipcode))
 
-    id = Column(Integer, primary_key=True)
-    address = Column(String)
-    bedrooms = Column(Integer)
-    bathrooms = Column(Float)
-    finished_sqft = Column(Integer)
-    listing_price = Column(Float)
-    # Add more columns as needed
+    similar_homes = cursor.fetchall()  # Fetch all rows returned by the query
 
-def connect_to_database():
-    try:
-        # Create a database engine
-        engine = create_engine('postgresql+psycopg2://{}:{}@{}:{}/{}'.format(
-            os.getenv("DB_USERNAME"),
-            os.getenv("DB_PASSWORD"),
-            "localhost",
-            "5433",
-            "zd"
-        ))
-        
-        # Create the tables if they do not exist
-        Base.metadata.create_all(engine)
-        
-        # Create a session
-        Session = sessionmaker(bind=engine)
-        session = Session()
-        
-        return session
-    except Exception as e:
-        print("Error while connecting to PostgreSQL:", e)
-        return None
+    conn.close()  # Close the database connection
 
-def get_similar_homes(home_id, session):
-    try:
-        # Get the details of the given home
-        home = session.query(Home).filter_by(id=home_id).first()
-        if not home:
-            print("No home found with the given ID.")
-            return []
+    return similar_homes
 
-        # Define the criteria for similar homes (you can adjust this as needed)
-        criteria = {
-            "bedrooms": home.bedrooms,
-            "bathrooms": home.bathrooms,
-            "finished_sqft": home.finished_sqft,
-            # Add more criteria here
-        }
+# Function to fetch further data about the selected home
+def get_home_data(home_id):
+    conn = psycopg2.connect(database="zd", user="postgres", password="iamgroot!!!", host="localhost", port="5433")
+    cursor = conn.cursor()
 
-        # Query for similar homes based on the criteria
-        similar_homes = session.query(Home).filter_by(**criteria).all()
-        
-        return similar_homes
-    except Exception as e:
-        print("Error while getting similar homes:", e)
-        return []
-
-def main():
-    # Connect to the database
-    session = connect_to_database()
-    if not session:
-        return
+    # Execute a SQL query to retrieve data about the selected home
+    query = """
+        SELECT *
+        FROM home_info
+        WHERE id = %s
+    """
+    cursor.execute(query, (home_id,))
     
-    # Example usage: Get similar homes for a given home ID
-    home_id = 123  # Replace with the desired home ID
-    similar_homes = get_similar_homes(home_id, session)
-    if similar_homes:
-        print("Similar homes:")
+    home_data = cursor.fetchone()  # Fetch the row returned by the query
+
+    conn.close()  # Close the database connection
+
+    return home_data
+
+# Streamlit UI code
+def main():
+    st.title('Home Comparables')
+
+    # Input fields
+    home_id = st.number_input('Home ID', value=39879902)
+    bed = st.number_input('Number of Bedrooms', value=3)
+    bath = st.number_input('Number of Bathrooms', value=2)
+    city_zipcode = st.text_input('City or Zipcode', value=9686)
+
+    # Button to fetch similar homes
+    if st.button('Find Similar Homes'):
+        similar_homes = get_similar_homes(home_id, bed, bath, city_zipcode)
+        
+        # Display the results
+        st.write('Similar Homes:')
         for home in similar_homes:
-            print(f"Home ID: {home.id}, Address: {home.address}")
-    else:
-        print("No similar homes found.")
+            home_id, address = home
+            with st.expander(address):
+                home_data = get_home_data(home_id)
+                attributes = [
+                    "ID", "Listing Key", "Source System", "Address", "USPS Address", "Status",
+                    "Listing Contract Date", "On Market Date", "Pending Date", "Last Sold Date",
+                    "Off Market Date", "Original Listing Price", "Listing Price", "Last Sold Price",
+                    "Home Type", "Finished Sqft", "Lot Size Sqft", "Bedrooms", "Bathrooms",
+                    "Year Built", "New Construction", "Has Pool", "State Market ID", "City Market ID",
+                    "Zipcode Market ID", "Neighborhood Level 1 Market ID", "Neighborhood Level 2 Market ID",
+                    "Neighborhood Level 3 Market ID", "Longitude", "Latitude", "Crawler"
+                ]
+                for i, attribute in enumerate(home_data):  
+                    st.write(f"{attributes[i]}: {attribute}")
+                
 
 if __name__ == "__main__":
     main()

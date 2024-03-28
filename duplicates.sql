@@ -119,3 +119,28 @@ WHERE EXISTS (
 ORDER BY address) where address = '1018 NE 71st Street, Seattle, WA, 98115'
 ;
 
+
+CHECKPOINT;
+BEGIN;
+--delete duplicates of Pseudo Duplicate
+WITH duplicates AS (
+    SELECT *,
+           ROW_NUMBER() OVER (PARTITION BY address ORDER BY listing_contract_date DESC) AS row_num
+    FROM home_info
+)
+DELETE FROM home_info
+WHERE (address, listing_contract_date) IN (
+    SELECT address, listing_contract_date
+    FROM duplicates
+    WHERE row_num > 1
+);
+
+--check if its deleted
+SELECT address, COUNT(DISTINCT listing_contract_date) AS unique_listing_dates_count
+FROM home_info
+GROUP BY address
+HAVING COUNT(DISTINCT listing_contract_date) > 1
+order by address;
+--they are deleted
+
+ROLLBACK;
