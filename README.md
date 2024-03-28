@@ -1,6 +1,6 @@
 # zdhackathon
 
-streamlit run app.py
+streamlit run visualization.py
 
 The app provides the following functionalities:
 
