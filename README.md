@@ -24,6 +24,7 @@ The app provides the following functionalities:
 ![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/60413563-2fd1-408f-adb5-10f6a5704d34)
 
 streamlit run Home Comparables.py
+
 Enter the criteria for the home you're interested in (such as number of bedrooms, bathrooms, and city_zipcode) and click the "Find Similar Homes" button.
 The app will display a list of similar homes. 
 Click on the address of each home to expand and view detailed information about it.
