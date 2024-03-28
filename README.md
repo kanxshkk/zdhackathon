@@ -1,6 +1,8 @@
 # zdhackathon
+-21pw10
+Kanishk Akash D V
 
- streamlit run 'main.py'
+streamlit run 'main.py'
  
 ![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/a716d0ae-75cc-442a-8b4c-626105340224)
 
@@ -55,4 +57,9 @@ Click on the address of each home to expand and view detailed information about 
 ![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/7be50a31-318f-4cc3-8a04-2f66b8350e68)
 
 ![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/3f26264a-9614-47ad-8626-bbefe1c0e9cd)
+
+**ERD:** is in the erd.pgerd file
+
+Data preprocessing and EDA are inside eda.sql 
+
 
