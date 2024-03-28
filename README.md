@@ -32,4 +32,12 @@ Click on the address of each home to expand and view detailed information about 
 ![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/c6024555-31e7-4eb3-82ec-f65de8d3cb3d)
 ![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/bf58380a-fb8e-4640-b2e8-deb8591fca00)
 
+Homes Deduplication:
+streamlit run duplicates.py 
+![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/ebafcae0-4e53-470e-9cfd-d0007541655f)
+![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/a8a47299-b48c-4f1b-a7b1-5ae28eaf268b)
+
+![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/46873e7b-6a2e-4371-996e-ce490e36e988)
+
+
 
