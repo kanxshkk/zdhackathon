@@ -126,6 +126,16 @@ FROM home_info
 WHERE finished_sqft IS NULL;
 --both has no null values
 
+
+select * from home_info where bathrooms is null;
+--setting the NULL values to 0, 
+UPDATE home_info
+SET bedrooms = COALESCE(bedrooms, 0),
+    bathrooms = COALESCE(bathrooms, 0),
+	lot_size_sqft = COALESCE(lot_size_sqft, 0),
+	finished_sqft = COALESCE(finished_sqft, 0)
+WHERE bedrooms IS NULL OR bathrooms IS NULL OR lot_size_sqft IS NULL OR finished_sqft IS NULL;
+
 --remove the homes with 0 bedrooms or 0 bathrooms or 0 sqft from home_info as it amkes no sense
 DELETE FROM home_info
 WHERE bedrooms = 0 OR bathrooms = 0 OR finished_sqft = 0;
@@ -236,7 +246,53 @@ GROUP BY listing_key
 HAVING COUNT(*) > 1;
 --22 null values 
 
---Check if same houses are listed twice
+select distinct bathrooms from home_info;
+select  distinct bedrooms from home_info;
+--convert decimal values in the "bathrooms" column to whole numbers
+UPDATE home_info
+SET bathrooms = ROUND(bathrooms)
+WHERE bathrooms IS NOT NULL;
+
+select * from home_info where off_market_date is not NULL and pending_date >off_market_date ;
+
+
+select * from home_info where off_market_date = '1800-01-01 00:00:00';
+--change them to null values
+UPDATE home_info
+SET off_market_date = NULL
+WHERE off_market_date = '1800-01-01 00:00:00';
+--similarly change all dates
+UPDATE home_info
+SET listing_contract_date = NULL
+WHERE listing_contract_date = '1800-01-01 00:00:00';
+UPDATE home_info
+SET on_market_date = NULL
+WHERE on_market_date = '1800-01-01 00:00:00' ;
+UPDATE home_info
+SET pending_date = NULL
+WHERE pending_date = '1800-01-01 00:00:00' ; 
+UPDATE home_info
+SET last_sold_date = NULL
+WHERE last_sold_date = '1800-01-01 00:00:00' ; 
+
+
+SELECT home_type,
+       COUNT(*) AS total_count,
+       AVG(bedrooms) AS total_bedrooms,
+       AVG(bathrooms) AS total_bathrooms,
+	   AVG(finished_sqft) AS avg_finished_sqft
+FROM home_info
+GROUP BY home_type
+ORDER BY home_type;
+
+
+
+
+select * from home_info;
+
+
+
+--remove duplicate houses
 SELECT *
 FROM home_info h1
 WHERE EXISTS (
@@ -285,7 +341,8 @@ WHERE EXISTS (
 	group by (source_system )
 );
 */
--- repeated addresses
+/*
+-- remove duplicates using repeated addresses
 SELECT address,usps_address, COUNT(*) AS address_count
 FROM home_info
 WHERE address IS NOT NULL and usps_address IS NOT NULL
@@ -307,34 +364,7 @@ WHERE (address, usps_address) IN (
 );
 
 --ROLLBACK;
-select distinct bathrooms from home_info;
-select  distinct bedrooms from home_info;
---convert decimal values in the "bathrooms" column to whole numbers
-UPDATE home_info
-SET bathrooms = ROUND(bathrooms)
-WHERE bathrooms IS NOT NULL;
-
-select * from home_info where off_market_date is not NULL and pending_date >off_market_date ;
-
-
-select * from home_info where off_market_date = '1800-01-01 00:00:00';
---change them to null values
-UPDATE home_info
-SET off_market_date = NULL
-WHERE off_market_date = '1800-01-01 00:00:00';
---similarly change all dates
-UPDATE home_info
-SET listing_contract_date = NULL
-WHERE listing_contract_date = '1800-01-01 00:00:00';
-UPDATE home_info
-SET on_market_date = NULL
-WHERE on_market_date = '1800-01-01 00:00:00' ;
-UPDATE home_info
-SET pending_date = NULL
-WHERE pending_date = '1800-01-01 00:00:00' ; 
-UPDATE home_info
-SET last_sold_date = NULL
-WHERE last_sold_date = '1800-01-01 00:00:00' ; 
+*/
 
 
 
