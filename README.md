@@ -39,5 +39,11 @@ streamlit run duplicates.py
 
 ![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/46873e7b-6a2e-4371-996e-ce490e36e988)
 
+Price Estimation:
+run priceestimation.py 
+and then 
+streamlit run 'Home Comparables.py'
+![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/b7302e4a-43aa-4655-bec9-4eee5447c670)
 
+![image](https://github.com/kanxshkk/zdhackathon/assets/102735501/c1a6a429-afb8-48b1-a499-cfb70e8e4886)
 
