@@ -247,9 +247,8 @@ WHERE EXISTS (
     AND h1.bathrooms = h2.bathrooms
     AND h1.finished_sqft = h2.finished_sqft
     AND h1.listing_contract_date = h2.listing_contract_date
-    -- Add more attributes as needed
 );
-
+/*
 SELECT *
 FROM home_info h1
 WHERE EXISTS (
@@ -283,6 +282,59 @@ WHERE EXISTS (
     AND h1.neighborhood_level_3_market_id = h2.neighborhood_level_3_market_id
 	
     AND h1.crawler = h2.crawler
+	group by (source_system )
 );
+*/
+-- repeated addresses
+SELECT address,usps_address, COUNT(*) AS address_count
+FROM home_info
+WHERE address IS NOT NULL and usps_address IS NOT NULL
+GROUP BY (address,usps_address)
+HAVING COUNT(*) > 1;
+
+--delete repeated addresses
+WITH duplicates AS (
+    SELECT *,
+           ROW_NUMBER() OVER (PARTITION BY address, usps_address ORDER BY listing_contract_date DESC) AS row_num
+    FROM home_info
+    WHERE address IS NOT NULL AND usps_address IS NOT NULL
+)
+DELETE FROM home_info
+WHERE (address, usps_address) IN (
+    SELECT address, usps_address
+    FROM duplicates
+    WHERE row_num > 1
+);
+
+--ROLLBACK;
+select distinct bathrooms from home_info;
+select  distinct bedrooms from home_info;
+--convert decimal values in the "bathrooms" column to whole numbers
+UPDATE home_info
+SET bathrooms = ROUND(bathrooms)
+WHERE bathrooms IS NOT NULL;
+
+select * from home_info where off_market_date is not NULL and pending_date >off_market_date ;
+
+
+select * from home_info where off_market_date = '1800-01-01 00:00:00';
+--change them to null values
+UPDATE home_info
+SET off_market_date = NULL
+WHERE off_market_date = '1800-01-01 00:00:00';
+--similarly change all dates
+UPDATE home_info
+SET listing_contract_date = NULL
+WHERE listing_contract_date = '1800-01-01 00:00:00';
+UPDATE home_info
+SET on_market_date = NULL
+WHERE on_market_date = '1800-01-01 00:00:00' ;
+UPDATE home_info
+SET pending_date = NULL
+WHERE pending_date = '1800-01-01 00:00:00' ; 
+UPDATE home_info
+SET last_sold_date = NULL
+WHERE last_sold_date = '1800-01-01 00:00:00' ; 
+
 
 
